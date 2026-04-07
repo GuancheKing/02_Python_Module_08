@@ -97,6 +97,5 @@ def main() -> None:
     print("Results saved to: matrix_analysis.png")
 
 
-
 if __name__ == "__main__":
     main()
