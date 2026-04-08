@@ -4,7 +4,7 @@ import site
 
 
 def detect_virtual_env() -> bool:
-    """Return True if a virtual environment is currently active."""
+    """Check whether a virtual environment is currently active."""
 
     virtual_env = os.environ.get("VIRTUAL_ENV")
     if virtual_env:
@@ -31,7 +31,7 @@ def print_inside_env() -> None:
 
 
 def print_outside_env() -> None:
-    """Display a warning when no virtual environment is active."""
+    """Print guidance when no virtual environment is detected."""
 
     print("\nMATRIX STATUS: You're still plugged in\n")
     print(f"Current Python: {sys.executable}")
@@ -46,7 +46,7 @@ def print_outside_env() -> None:
 
 
 def main() -> None:
-    """Run the construct checker."""
+    """Run the virtual environment checker."""
 
     if detect_virtual_env():
         print_inside_env()

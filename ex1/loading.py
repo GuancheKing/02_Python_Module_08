@@ -1,6 +1,6 @@
-import importlib
-from typing import Any
+import importlib.util
 from importlib.metadata import version
+from typing import Any
 
 
 PACKAGE_DESCRIPTIONS = {
@@ -12,17 +12,20 @@ PACKAGE_DESCRIPTIONS = {
 
 
 def package_exists(dependency: str) -> bool:
+    """Return True if the requested package is available."""
 
     spec = importlib.util.find_spec(dependency)
     return spec is not None
 
 
 def get_package_version(dependency: str) -> str:
+    """Return the installed version of a package."""
 
     return version(dependency)
 
 
 def format_package_status(dependency: str) -> str:
+    """Build the status message for a dependency check."""
 
     if package_exists(dependency):
         v = get_package_version(dependency)
@@ -33,12 +36,14 @@ def format_package_status(dependency: str) -> str:
 
 
 def print_install_instructions() -> None:
+    """Print installation commands for pip and Poetry."""
 
     print("\nInstall with pip: 'pip install -r requirements.txt'")
     print("Install with Poetry: 'poetry install'")
 
 
 def check_dependencies() -> bool:
+    """Check required dependencies and report missing packages."""
 
     packages: list[str] = ['numpy', 'pandas', 'matplotlib', "requests"]
     missing: list[str] = []
@@ -53,6 +58,8 @@ def check_dependencies() -> bool:
 
 
 def generate_matrix_data() -> tuple[Any, Any]:
+    """Generate simulated Matrix data using numpy."""
+
     import numpy as np
 
     time = np.linspace(1200, 1800, 100)
@@ -61,8 +68,10 @@ def generate_matrix_data() -> tuple[Any, Any]:
 
 
 def build_dataframe(time: Any, energy: Any) -> Any:
-    import pandas as pd
+    """Create a pandas DataFrame from generated Matrix data."""
 
+    import pandas as pd
+git a
     df = pd.DataFrame({
         "time": time,
         "energy": energy
@@ -71,6 +80,8 @@ def build_dataframe(time: Any, energy: Any) -> Any:
 
 
 def generate_visualization(df: Any) -> None:
+    """Generate and save a visualization from the DataFrame."""
+
     import matplotlib.pyplot as plt
 
     plt.plot(df["time"], df["energy"])
@@ -81,6 +92,7 @@ def generate_visualization(df: Any) -> None:
 
 
 def main() -> None:
+    """Run the Matrix data loading and analysis workflow."""
 
     print("\nLOADING STATUS: Loading programs...\n")
     print("Checking dependencies:")

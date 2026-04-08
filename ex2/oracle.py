@@ -1,15 +1,24 @@
-from dotenv import load_dotenv
 import os
 
 CONFIG_VARS = ("mode", "db", "api_key", "log_lvl", "zion_endpoint")
 
 
 def load_environment() -> None:
+    """Load environment variables from the .env file."""
 
+    try:
+        from dotenv import load_dotenv
+    except ImportError:
+        print(
+            "dotenv: Not installed. Run 'pip install python-dotenv' "
+            "on venv to install.\n"
+            )
+        exit()
     load_dotenv()
 
 
 def get_config() -> dict[str, str | None]:
+    """Collect the current application configuration from the environment."""
 
     config = {
         "mode": os.environ.get("MATRIX_MODE"),
@@ -22,6 +31,7 @@ def get_config() -> dict[str, str | None]:
 
 
 def validate_config(config: dict[str, str | None]) -> list[str]:
+    """Validate required configuration values and report missing entries."""
 
     errors: list[str] = []
     for key in CONFIG_VARS:
@@ -38,6 +48,7 @@ def validate_config(config: dict[str, str | None]) -> list[str]:
 
 
 def display_config(config: dict[str, str | None]) -> None:
+    """Display the loaded configuration in a user-friendly format."""
 
     mode = config.get('mode')
     print(f"Mode: {mode}")
@@ -62,20 +73,30 @@ def display_config(config: dict[str, str | None]) -> None:
 
 
 def display_security_check() -> None:
+    """Print a simple environment security summary."""
+
     print("\nEnvironment security check:")
     print("[OK] No hardcoded secrets detected")
     print("[OK] .env file properly configured")
     print("[OK] Production overrides available")
-    print("\nThe Oracle sees all configurations")
+    print("\nThe Oracle sees all configurations.")
 
 
 def main() -> None:
+    """Run the Oracle configuration check."""
 
     print("\nORACLE STATUS: Reading the Matrix...\n")
-    print("Configuration loaded:")
     load_environment()
     config = get_config()
-    validate_config(config)
+    errors = validate_config(config)
+
+    if errors:
+        print("Configuration errors:")
+        for e in errors:
+            print(f"- {e}")
+        return
+
+    print("Configuration loaded:")
     display_config(config)
     display_security_check()
 
