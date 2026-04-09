@@ -60,7 +60,7 @@ def check_dependencies() -> bool:
 def generate_matrix_data() -> tuple[Any, Any]:
     """Generate simulated Matrix data using numpy."""
 
-    import numpy as np
+    import numpy as np # type: ignore[import]
 
     time = np.linspace(1200, 1800, 100)
     energy = np.sin(time * 0.01) + np.random.rand(100)
@@ -70,8 +70,8 @@ def generate_matrix_data() -> tuple[Any, Any]:
 def build_dataframe(time: Any, energy: Any) -> Any:
     """Create a pandas DataFrame from generated Matrix data."""
 
-    import pandas as pd
-git a
+    import pandas as pd # type: ignore[import]
+
     df = pd.DataFrame({
         "time": time,
         "energy": energy
@@ -82,7 +82,7 @@ git a
 def generate_visualization(df: Any) -> None:
     """Generate and save a visualization from the DataFrame."""
 
-    import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt # type: ignore[import]
 
     plt.plot(df["time"], df["energy"])
     plt.title("Matrix Energy Analysis")
